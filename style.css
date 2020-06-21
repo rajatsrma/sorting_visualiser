@@ -29,7 +29,6 @@ nav button {
 .logo {
   letter-spacing: 1px;
   text-transform: uppercase;
-  /* font-style: italic; */
   font-weight: 500;
   color: white;
 }
@@ -47,8 +46,4 @@ nav button {
   display: flex;
   justify-content: space-around;
   align-items: flex-end;
-}
-
-.selected-bar {
-  background-color: rgb(241, 132, 30);
 }
