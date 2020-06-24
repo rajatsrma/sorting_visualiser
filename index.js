@@ -1,14 +1,15 @@
 // generate array with random numbers on click
 const numberArray = [];
-const arrayLength = 150;
-const sortTime = 20000;
-const mergeSortTime = 20000;
+const arrayLength = 50;
+const sortTime = 5000;
+const mergeSortTime = 500;
 
 // animation array
 const animationArray = [];
 
-const SECONDARY_COLOR = "red";
 const PRIMARY_COLOR = "rgb(204, 122, 184)";
+const SECONDARY_COLOR = "red";
+
 // generate some array on page load
 window.onload = () => {
   document.querySelector("#generate-array").click();
@@ -216,13 +217,13 @@ function mergeSort(numberArray) {
       setTimeout(() => {
         barOneStyle.backgroundColor = color;
         barTwoStyle.backgroundColor = color;
-      }, (i * mergeSortTime) / 10000);
+      }, (i * mergeSortTime) / arrayLength);
     } else {
       setTimeout(() => {
         const [barOneIdx, newHeight] = animations[i];
         const barOneStyle = arrayBars[barOneIdx].style;
         barOneStyle.height = `${(newHeight / 120) * 100}%`;
-      }, (i * mergeSortTime) / 10000);
+      }, (i * mergeSortTime) / arrayLength);
     }
   }
   setTimeout(() => {
@@ -230,7 +231,7 @@ function mergeSort(numberArray) {
     arrayBars.forEach((bar) => {
       bar.style.backgroundColor = "rgb(241, 132, 30)";
     });
-  }, (animations.length * mergeSortTime) / 10000 + 100);
+  }, animations.length * mergeSortTime + 100);
 }
 
 function getMergeSortAnimations(array) {
@@ -309,4 +310,83 @@ function doMerge(
     animations.push([k, auxiliaryArray[j]]);
     mainArray[k++] = auxiliaryArray[j++];
   }
+}
+
+// Quick sort implementation--------
+document.querySelector("#quick-sort").addEventListener("click", () => {
+  quickSort();
+  disableButtons();
+});
+
+// quicksort function--
+function quickSort() {
+  var copyArray = numberArray.slice();
+  var quickAnimations = getQuickSortAnimations(copyArray);
+  animateQuickBars(quickAnimations);
+}
+
+// Quick sort animations--
+function getQuickSortAnimations(copyArray) {
+  var quickAnimations = [];
+  quickSortHelper(copyArray, 0, copyArray.length - 1, quickAnimations);
+  return quickAnimations;
+}
+function quickSortHelper(copyArray, start, end, quickAnimations) {
+  if (start >= end) return;
+  var pivotIndex = findPivot(copyArray, start, end, quickAnimations);
+  quickSortHelper(copyArray, start, pivotIndex - 1, quickAnimations);
+  quickSortHelper(copyArray, pivotIndex + 1, end, quickAnimations);
+}
+
+function findPivot(copyArray, start, end, quickAnimations) {
+  var i = start - 1;
+  var pivotValue = copyArray[end];
+  for (var j = start; j < end; j++) {
+    if (copyArray[j] < pivotValue) {
+      i++;
+      quickAnimations.push([i, j]);
+      var temp = copyArray[j];
+      copyArray[j] = copyArray[i];
+      copyArray[i] = temp;
+    }
+  }
+  i++;
+  quickAnimations.push([i, j]);
+  var temp = copyArray[end];
+  copyArray[end] = copyArray[i];
+  copyArray[i] = temp;
+  return i;
+}
+
+function animateQuickBars(animationArray) {
+  var n = animationArray.length;
+
+  const allBars = document.querySelectorAll(".bar-diagram div");
+  animationArray.forEach((arr, index) => {
+    setTimeout(() => {
+      allBars[arr[0]].style.backgroundColor = "red";
+      allBars[arr[1]].style.backgroundColor = "red";
+    }, (index / n) * sortTime);
+    // console.log((index / n) * 5000, ((index + 1) / n) * 5000);
+  });
+  animationArray.forEach((arr, index) => {
+    setTimeout(() => {
+      if (numberArray[arr[0]] > numberArray[arr[1]]) {
+        var temp = numberArray[arr[0]];
+        numberArray[arr[0]] = numberArray[arr[1]];
+        numberArray[arr[1]] = temp;
+
+        temp = allBars[arr[1]].style.height;
+        allBars[arr[1]].style.height = allBars[arr[0]].style.height;
+        allBars[arr[0]].style.height = temp;
+      }
+      allBars[arr[0]].style.backgroundColor = "rgb(204, 122, 184)";
+      allBars[arr[1]].style.backgroundColor = "rgb(204, 122, 184)";
+    }, ((index + 0.99) / n) * sortTime);
+  });
+  setTimeout(() => {
+    allBars.forEach((bar) => {
+      bar.style.backgroundColor = "rgb(241, 132, 30)";
+    });
+  }, sortTime + 100);
 }
