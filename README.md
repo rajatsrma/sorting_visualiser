@@ -1,1 +1,1 @@
-This is a bubble sort algorithm visualiser using javascript.
+This is a sorting-algorithm visualiser project created using javascript.
