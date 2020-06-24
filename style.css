@@ -53,3 +53,12 @@ nav button {
   display: flex;
   justify-content: center;
 }
+
+@media screen and (max-width: 500px) {
+  .logo {
+    display: none;
+  }
+  .algorithms {
+    width: 70%;
+  }
+}
