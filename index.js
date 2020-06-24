@@ -358,18 +358,18 @@ function findPivot(copyArray, start, end, quickAnimations) {
   return i;
 }
 
-function animateQuickBars(animationArray) {
-  var n = animationArray.length;
+function animateQuickBars(quickAnimations) {
+  var n = quickAnimations.length;
 
   const allBars = document.querySelectorAll(".bar-diagram div");
-  animationArray.forEach((arr, index) => {
+  quickAnimations.forEach((arr, index) => {
     setTimeout(() => {
       allBars[arr[0]].style.backgroundColor = "red";
       allBars[arr[1]].style.backgroundColor = "red";
     }, (index / n) * sortTime);
     // console.log((index / n) * 5000, ((index + 1) / n) * 5000);
   });
-  animationArray.forEach((arr, index) => {
+  quickAnimations.forEach((arr, index) => {
     setTimeout(() => {
       if (numberArray[arr[0]] > numberArray[arr[1]]) {
         var temp = numberArray[arr[0]];
