@@ -1,7 +1,7 @@
 // generate array with random numbers on click
 const numberArray = [];
-const arrayLength = 50;
-const sortTime = 5000;
+const arrayLength = 30;
+const sortTime = 10000;
 const mergeSortTime = 500;
 
 // animation array
